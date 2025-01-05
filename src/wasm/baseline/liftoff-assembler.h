@@ -738,6 +738,10 @@ class LiftoffAssembler : public MacroAssembler {
                           uintptr_t offset_imm, LiftoffRegister src,
                           StoreType type, LiftoffRegList pinned,
                           bool i64_offset);
+  inline void AtomicStoreRelease(Register dst_addr, Register offset_reg,
+                          uintptr_t offset_imm, LiftoffRegister src,
+                          StoreType type, LiftoffRegList pinned,
+                          bool i64_offset);
 
   inline void AtomicAdd(Register dst_addr, Register offset_reg,
                         uintptr_t offset_imm, LiftoffRegister value,

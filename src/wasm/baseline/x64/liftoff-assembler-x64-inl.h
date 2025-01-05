@@ -698,6 +698,39 @@ void LiftoffAssembler::AtomicStore(Register dst_addr, Register offset_reg,
   }
 }
 
+//Add atomic store instruction
+void LiftoffAssembler::AtomicStoreRelease(Register dst_addr, Register offset_reg,
+                                   uintptr_t offset_imm, LiftoffRegister src,
+                                   StoreType type, LiftoffRegList /* pinned */,
+                                   bool i64_offset) {
+  if (offset_reg != no_reg && !i64_offset) AssertZeroExtended(offset_reg);
+  Operand dst_op = liftoff::GetMemOp(this, dst_addr, offset_reg, offset_imm);
+  Register src_reg = src.gp();
+  if (cache_state()->is_used(src)) {
+    movq(kScratchRegister, src_reg);
+    src_reg = kScratchRegister;
+  }
+  switch (type.value()) {
+    case StoreType::kI32Store8:
+    case StoreType::kI64Store8:
+      xchgb(src_reg, dst_op);
+      break;
+    case StoreType::kI32Store16:
+    case StoreType::kI64Store16:
+      xchgw(src_reg, dst_op);
+      break;
+    case StoreType::kI32Store:
+    case StoreType::kI64Store32:
+      xchgl(src_reg, dst_op);
+      break;
+    case StoreType::kI64Store:
+      xchgq(src_reg, dst_op);
+      break;
+    default:
+      UNREACHABLE();
+  }
+}
+
 void LiftoffAssembler::AtomicAdd(Register dst_addr, Register offset_reg,
                                  uintptr_t offset_imm, LiftoffRegister value,
                                  LiftoffRegister result, StoreType type,
