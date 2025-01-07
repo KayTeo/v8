@@ -952,6 +952,7 @@
   V(s2s_I64AtomicLoad32U)                       \
   V(s2s_I64AtomicLoad32U_Idx64)                 \
   V(s2s_I32AtomicStore)                         \
+  V(s2s_I32AtomicStoreRelease)                  \
   V(s2s_I32AtomicStore_Idx64)                   \
   V(s2s_I32AtomicStore8U)                       \
   V(s2s_I32AtomicStore8U_Idx64)                 \

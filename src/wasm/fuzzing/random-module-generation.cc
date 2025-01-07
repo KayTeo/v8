@@ -895,6 +895,7 @@ class BodyGen {
       case kExprI64StoreMem32:
       case kExprF32StoreMem:
       case kExprI32AtomicStore:
+      case kExprI32AtomicStoreRelease:
       case kExprI64AtomicStore32U:
       case kExprI32AtomicLoad:
       case kExprI64AtomicLoad32U:

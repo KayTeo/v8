@@ -4056,6 +4056,7 @@ class TurboshaftGraphBuildingInterface : public WasmGraphBuilderBase {
                         MemoryRepresentation::OUTPUT());
 #define STORE_OPERATION(V)             \
   V(I32AtomicStore, Word32, Uint32)    \
+  V(I32AtomicStoreRelease, Word32, Uint32)    \
   V(I32AtomicStore16U, Word32, Uint16) \
   V(I32AtomicStore8U, Word32, Uint8)   \
   V(I64AtomicStore, Word64, Uint64)    \

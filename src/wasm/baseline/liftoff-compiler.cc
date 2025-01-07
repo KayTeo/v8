@@ -5969,6 +5969,7 @@ class LiftoffCompiler {
 
 #define ATOMIC_STORE_LIST(V)        \
   V(I32AtomicStore, kI32Store)      \
+  V(I32AtomicStoreRelease, kI32Store) \
   V(I64AtomicStore, kI64Store)      \
   V(I32AtomicStore8U, kI32Store8)   \
   V(I32AtomicStore16U, kI32Store16) \

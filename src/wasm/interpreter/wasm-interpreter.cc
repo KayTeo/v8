@@ -4522,6 +4522,7 @@ class Handlers : public HandlersBase {
 
 #define FOREACH_ATOMIC_STORE_OP(V)                           \
   V(I32AtomicStore, Uint32, uint32_t, I32, uint32_t, I32)    \
+  V(I32AtomicStoreRelease, Uint32, uint32_t, I32, uint32_t, I32)    \
   V(I32AtomicStore8U, Uint8, uint8_t, I32, uint32_t, I32)    \
   V(I32AtomicStore16U, Uint16, uint16_t, I32, uint32_t, I32) \
   V(I64AtomicStore, Uint64, uint64_t, I64, uint64_t, I64)    \
