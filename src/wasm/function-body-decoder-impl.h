@@ -167,6 +167,7 @@ static constexpr StoreType GetStoreType(WasmOpcode opcode) {
 
 #define ATOMIC_STORE_OP_LIST(V) \
   V(I32AtomicStore, Uint32)     \
+  V(I32AtomicStoreRelease, Uint32)     \
   V(I64AtomicStore, Uint64)     \
   V(I32AtomicStore8U, Uint8)    \
   V(I32AtomicStore16U, Uint16)  \
