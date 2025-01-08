@@ -713,18 +713,18 @@ void LiftoffAssembler::AtomicStoreRelease(Register dst_addr, Register offset_reg
   switch (type.value()) {
     case StoreType::kI32Store8:
     case StoreType::kI64Store8:
-      xchgb(src_reg, dst_op);
+      movb(src_reg, dst_op);
       break;
     case StoreType::kI32Store16:
     case StoreType::kI64Store16:
-      xchgw(src_reg, dst_op);
+      movw(src_reg, dst_op);
       break;
     case StoreType::kI32Store:
     case StoreType::kI64Store32:
-      xchgl(src_reg, dst_op);
+      movl(src_reg, dst_op);
       break;
     case StoreType::kI64Store:
-      xchgq(src_reg, dst_op);
+      movq(src_reg, dst_op);
       break;
     default:
       UNREACHABLE();
