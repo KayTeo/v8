@@ -677,6 +677,8 @@ void LiftoffAssembler::AtomicStore(Register dst_addr, Register offset_reg,
     movq(kScratchRegister, src_reg);
     src_reg = kScratchRegister;
   }
+  printf("Atomic store (not release) called\n");
+
   switch (type.value()) {
     case StoreType::kI32Store8:
     case StoreType::kI64Store8:
@@ -710,6 +712,8 @@ void LiftoffAssembler::AtomicStoreRelease(Register dst_addr, Register offset_reg
     movq(kScratchRegister, src_reg);
     src_reg = kScratchRegister;
   }
+
+  printf("Atomic store release called\n");
   switch (type.value()) {
     case StoreType::kI32Store8:
     case StoreType::kI64Store8:
