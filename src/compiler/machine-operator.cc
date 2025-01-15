@@ -251,6 +251,7 @@ StorePairRepresentation const& StorePairRepresentationOf(Operator const* op) {
 
 AtomicStoreParameters const& AtomicStoreParametersOf(Operator const* op) {
   DCHECK(IrOpcode::kWord32AtomicStore == op->opcode() ||
+         IrOpcode::kWord32AtomicStoreRelease == op->opcode() ||
          IrOpcode::kWord64AtomicStore == op->opcode());
   return OpParameter<AtomicStoreParameters>(op);
 }
@@ -2299,6 +2300,34 @@ const Operator* MachineOperatorBuilder::Word32AtomicStore(
         IrOpcode::kWord32AtomicStore,                                \
         Operator::kNoDeopt | Operator::kNoRead | Operator::kNoThrow, \
         "Word32AtomicStore", 3, 1, 1, 0, 1, 0, params);              \
+  }
+  ATOMIC_REPRESENTATION_LIST(STORE)
+  ATOMIC_TAGGED_REPRESENTATION_LIST(STORE)
+#undef STORE
+  UNREACHABLE();
+}
+
+const Operator* MachineOperatorBuilder::Word32AtomicStoreRelease(
+    AtomicStoreParameters params) {
+#define CACHED_STORE_WITH_KIND(kRep, Kind)                      \
+  if (params.representation() == MachineRepresentation::kRep && \
+      params.order() == AtomicMemoryOrder::kAcqRel &&           \
+      params.kind() == MemoryAccessKind::k##Kind) {             \
+    return &cache_.kWord32AcqRelStore##kRep##Kind;              \
+  }
+#define CACHED_STORE(kRep)             \
+  CACHED_STORE_WITH_KIND(kRep, Normal) \
+  CACHED_STORE_WITH_KIND(kRep, ProtectedByTrapHandler)
+  ATOMIC_REPRESENTATION_LIST(CACHED_STORE)
+#undef CACHED_STORE_WITH_KIND
+#undef CACHED_STORE
+
+#define STORE(kRep)                                                  \
+  if (params.representation() == MachineRepresentation::kRep) {      \
+    return zone_->New<Operator1<AtomicStoreParameters>>(             \
+        IrOpcode::kWord32AtomicStoreRelease,                         \
+        Operator::kNoDeopt | Operator::kNoRead | Operator::kNoThrow, \
+        "Word32AtomicStoreRelease", 3, 1, 1, 0, 1, 0, params);       \
   }
   ATOMIC_REPRESENTATION_LIST(STORE)
   ATOMIC_TAGGED_REPRESENTATION_LIST(STORE)

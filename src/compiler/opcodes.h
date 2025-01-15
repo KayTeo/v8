@@ -737,6 +737,7 @@
 #define MACHINE_ATOMIC_OP_LIST(V)    \
   V(Word32AtomicLoad)                \
   V(Word32AtomicStore)               \
+  V(Word32AtomicStoreRelease)        \
   V(Word32AtomicExchange)            \
   V(Word32AtomicCompareExchange)     \
   V(Word32AtomicAdd)                 \

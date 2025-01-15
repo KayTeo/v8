@@ -661,7 +661,7 @@ V8_EXPORT_PRIVATE bool IsJSCompatibleSignature(const CanonicalSig* sig);
   V(I64AtomicLoad16U, 0xfe15, l_i, "i64.atomic.load16_u", l_l)                \
   V(I64AtomicLoad32U, 0xfe16, l_i, "i64.atomic.load32_u", l_l)                \
   V(I32AtomicStore, 0xfe17, v_ii, "i32.atomic.store", v_li)                   \
-  V(I32AtomicStoreRelease, 0xfe04, v_ii, "i32.atomic.store.release", v_li)                   \
+  V(I32AtomicStoreRelease, 0xfe04, v_ii, "i32.atomic.store.release", v_li)    \
   V(I64AtomicStore, 0xfe18, v_il, "i64.atomic.store", v_ll)                   \
   V(I32AtomicStore8U, 0xfe19, v_ii, "i32.atomic.store8", v_li)                \
   V(I32AtomicStore16U, 0xfe1a, v_ii, "i32.atomic.store16", v_li)              \

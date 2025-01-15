@@ -5114,7 +5114,7 @@ Node* WasmGraphBuilder::AtomicOp(const wasm::WasmMemory* memory,
         // Store.
         CASE_LOAD_STORE(I32AtomicStore, kOneInput, Uint32, Word32AtomicStore,
                         wasm::kWasmI32)
-        CASE_LOAD_STORE(I32AtomicStoreRelease, kOneInput, Uint32, Word32AtomicStore,
+        CASE_LOAD_STORE(I32AtomicStoreRelease, kOneInput, Uint32, Word32AtomicStoreRelease,
                         wasm::kWasmI32)
         CASE_LOAD_STORE(I64AtomicStore, kOneInput, Uint64, Word64AtomicStore,
                         wasm::kWasmI64)
