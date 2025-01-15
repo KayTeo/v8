@@ -677,7 +677,6 @@ void LiftoffAssembler::AtomicStore(Register dst_addr, Register offset_reg,
     movq(kScratchRegister, src_reg);
     src_reg = kScratchRegister;
   }
-  static_assert(false, "Atomic store called");
 
   switch (type.value()) {
     case StoreType::kI32Store8:
@@ -712,7 +711,6 @@ void LiftoffAssembler::AtomicStoreRelease(Register dst_addr, Register offset_reg
     movq(kScratchRegister, src_reg);
     src_reg = kScratchRegister;
   }
-    static_assert(false, "Atomic store release called");
 
   switch (type.value()) {
     case StoreType::kI32Store8:
