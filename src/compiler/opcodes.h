@@ -1325,7 +1325,8 @@ namespace compiler {
 
 // Declare an enumeration with all the opcodes at all levels so that they
 // can be globally, uniquely numbered.
-class V8_EXPORT_PRIVATE IrOpcode {
+class V8_EXPORT_PRIVATE 
+IrOpcode {
  public:
   enum Value {
 #define DECLARE_OPCODE(x, ...) k##x,

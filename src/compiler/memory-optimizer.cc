@@ -82,6 +82,7 @@ bool CanAllocate(const Node* node) {
     case IrOpcode::kWord32AtomicPairSub:
     case IrOpcode::kWord32AtomicPairXor:
     case IrOpcode::kWord32AtomicStore:
+    case IrOpcode::kWord32AtomicStoreRelease:
     case IrOpcode::kWord32AtomicSub:
     case IrOpcode::kWord32AtomicXor:
     case IrOpcode::kWord64AtomicAdd:

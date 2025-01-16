@@ -1992,6 +1992,7 @@ void Verifier::Visitor::Check(Node* node, const AllNodes& all) {
     case IrOpcode::kMemoryBarrier:
     case IrOpcode::kWord32AtomicLoad:
     case IrOpcode::kWord32AtomicStore:
+    case IrOpcode::kWord32AtomicStoreRelease:
     case IrOpcode::kWord32AtomicExchange:
     case IrOpcode::kWord32AtomicCompareExchange:
     case IrOpcode::kWord32AtomicAdd:

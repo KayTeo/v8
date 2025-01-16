@@ -1583,6 +1583,30 @@ struct MachineOperatorGlobalCache {
 #undef ATOMIC_STORE_WITH_KIND
 #undef ATOMIC_STORE
 
+//############
+#define ATOMIC_STORE_WITH_KIND(Type, Kind)                                 \
+  struct Word32AcqRelStore##Type##Kind##Operator                           \
+      : public Operator1<AtomicStoreParameters> {                          \
+    Word32AcqRelStore##Type##Kind##Operator()                              \
+        : Operator1<AtomicStoreParameters>(                                \
+              IrOpcode::kWord32AtomicStoreRelease, /*Add new relacq opcode?*/     \
+              Operator::kNoDeopt | Operator::kNoRead | Operator::kNoThrow, \
+              "Word32AtomicStoreRelease", 3, 1, 1, 0, 1, 0,                \
+              AtomicStoreParameters(MachineRepresentation::Type,           \
+                                    kNoWriteBarrier,                       \
+                                    AtomicMemoryOrder::kAcqRel,            \
+                                    MemoryAccessKind::k##Kind)) {}         \
+  };                                                                       \
+  Word32AcqRelStore##Type##Kind##Operator kWord32AcqRelStore##Type##Kind;
+#define ATOMIC_STORE(Type)             \
+  ATOMIC_STORE_WITH_KIND(Type, Normal) \
+  ATOMIC_STORE_WITH_KIND(Type, ProtectedByTrapHandler)
+  ATOMIC_REPRESENTATION_LIST(ATOMIC_STORE)
+#undef ATOMIC_STORE_WITH_KIND
+#undef ATOMIC_STORE
+//############
+
+
 #define ATOMIC_STORE_WITH_KIND(Type, Kind)                                 \
   struct Word64SeqCstStore##Type##Kind##Operator                           \
       : public Operator1<AtomicStoreParameters> {                          \

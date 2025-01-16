@@ -1295,6 +1295,8 @@ class V8_EXPORT_PRIVATE MachineOperatorBuilder final
   // atomic-store [base + index], value
   const Operator* Word32AtomicStore(AtomicStoreParameters params);
   // atomic-store [base + index], value
+  const Operator* Word32AtomicStoreRelease(AtomicStoreParameters params);
+  // atomic-store [base + index], value
   const Operator* Word64AtomicStore(AtomicStoreParameters params);
   // atomic-exchange [base + index], value
   const Operator* Word32AtomicExchange(AtomicOpParameters params);
