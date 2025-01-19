@@ -913,6 +913,7 @@ V8_EXPORT_PRIVATE bool IsJSCompatibleSignature(const CanonicalSig* sig);
 // {ExtractPrefixedOpcodeBytes} (for testing).
 enum WasmOpcode {
 // Declare expression opcodes.
+//Gets expanded to enum kExprAtomicStoreRelease = fe04
 #define DECLARE_NAMED_ENUM(name, opcode, ...) kExpr##name = opcode,
   FOREACH_OPCODE(DECLARE_NAMED_ENUM)
 #undef DECLARE_NAMED_ENUM

@@ -301,6 +301,15 @@ class V8_EXPORT_PRIVATE RawMachineAssembler {
     return AddNode(machine()->Word32AtomicStore(params), base, index, value);
   }
 
+  //######
+  Node* AtomicStoreRelease(AtomicStoreParameters params, Node* base, Node* index,
+                    Node* value) {
+    DCHECK(!IsMapOffsetConstantMinusTag(index));
+    DCHECK_NE(params.representation(), MachineRepresentation::kWord64);
+    return AddNode(machine()->Word32AtomicStoreRelease(params), base, index, value);
+  }
+  //######
+
   Node* AtomicStore64(AtomicStoreParameters params, Node* base, Node* index,
                       Node* value, Node* value_high) {
     if (machine()->Is64()) {

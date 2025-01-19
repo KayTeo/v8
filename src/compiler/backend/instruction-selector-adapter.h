@@ -241,6 +241,7 @@ struct TurbofanAdapter {
              node->opcode() == IrOpcode::kStoreIndirectPointer ||
              node->opcode() == IrOpcode::kUnalignedStore ||
              node->opcode() == IrOpcode::kWord32AtomicStore ||
+             node->opcode() == IrOpcode::kWord32AtomicStoreRelease ||
              node->opcode() == IrOpcode::kWord64AtomicStore);
     }
 
@@ -256,6 +257,7 @@ struct TurbofanAdapter {
                   WriteBarrierKind::kNoWriteBarrier};
         case IrOpcode::kWord32AtomicStore:
         case IrOpcode::kWord64AtomicStore:
+        case IrOpcode::kWord32AtomicStoreRelease:
           return AtomicStoreParametersOf(node_->op()).store_representation();
         default:
           UNREACHABLE();
