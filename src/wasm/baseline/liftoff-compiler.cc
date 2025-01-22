@@ -5716,6 +5716,7 @@ class LiftoffCompiler {
       outer_pinned.set(index);
     }
     __ AtomicStoreRelease(addr, index, offset, value, type, outer_pinned, i64_offset);
+    //__ AtomicStoreRelease(addr, index, offset, value, type, outer_pinned, i64_offset);
     if (V8_UNLIKELY(v8_flags.trace_wasm_memory)) {
       // TODO(14259): Implement memory tracing for multiple memories.
       CHECK_EQ(0, imm.memory->index);
@@ -5939,44 +5940,6 @@ class LiftoffCompiler {
                            decoder->position());
     }
   }
-
-  //######
-  void AtomicStoreReleaseMem(FullDecoder* decoder, StoreType type,
-                      const MemoryAccessImmediate& imm) {
-    LiftoffRegList pinned;
-    LiftoffRegister value = pinned.set(__ PopToRegister());
-    bool i64_offset = imm.memory->is_memory64();
-    auto& index_slot = __ cache_state() -> stack_state.back();
-    DCHECK_EQ(i64_offset ? kI64 : kI32, index_slot.kind());
-    uintptr_t offset = imm.offset;
-    LiftoffRegList outer_pinned;
-    Register index = no_reg;
-
-    if (IndexStaticallyInBoundsAndAligned(imm.memory, index_slot, type.size(),
-                                          &offset)) {
-      __ cache_state() -> stack_state.pop_back();  // Pop index.
-      CODE_COMMENT("atomic store (constant offset)");
-    } else {
-      LiftoffRegister full_index = __ PopToRegister(pinned);
-      index =
-          BoundsCheckMem(decoder, imm.memory, type.size(), imm.offset,
-                         full_index, pinned, kDoForceCheck, kCheckAlignment);
-      pinned.set(index);
-      CODE_COMMENT("atomic store");
-    }
-    Register addr = pinned.set(GetMemoryStart(imm.mem_index, pinned));
-    if (V8_UNLIKELY(v8_flags.trace_wasm_memory) && index != no_reg) {
-      outer_pinned.set(index);
-    }
-    __ AtomicStoreRelease(addr, index, offset, value, type, outer_pinned, i64_offset);
-    if (V8_UNLIKELY(v8_flags.trace_wasm_memory)) {
-      // TODO(14259): Implement memory tracing for multiple memories.
-      CHECK_EQ(0, imm.memory->index);
-      TraceMemoryOperation(true, type.mem_rep(), index, offset,
-                           decoder->position());
-    }
-  }
-  //######
 
   void AtomicLoadMem(FullDecoder* decoder, LoadType type,
                      const MemoryAccessImmediate& imm) {
