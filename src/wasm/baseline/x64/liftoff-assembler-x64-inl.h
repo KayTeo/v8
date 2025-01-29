@@ -707,26 +707,27 @@ void LiftoffAssembler::AtomicStoreRelease(Register dst_addr, Register offset_reg
   if (offset_reg != no_reg && !i64_offset) AssertZeroExtended(offset_reg);
   Operand dst_op = liftoff::GetMemOp(this, dst_addr, offset_reg, offset_imm);
   Register src_reg = src.gp();
+  /*
   if (cache_state()->is_used(src)) {
     movq(kScratchRegister, src_reg);
     src_reg = kScratchRegister;
-  }
+  }*/
 
   switch (type.value()) {
     case StoreType::kI32Store8:
     case StoreType::kI64Store8:
-      movb(src_reg, dst_op);
+      movb(dst_op, src_reg);
       break;
     case StoreType::kI32Store16:
     case StoreType::kI64Store16:
-      movw(src_reg, dst_op);
+      movw(dst_op, src_reg);
       break;
     case StoreType::kI32Store:
     case StoreType::kI64Store32:
-      movl(src_reg, dst_op);
+      movl(dst_op, src_reg);
       break;
     case StoreType::kI64Store:
-      movq(src_reg, dst_op);
+      movq(dst_op, src_reg);
       break;
     default:
       UNREACHABLE();

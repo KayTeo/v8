@@ -5715,8 +5715,10 @@ class LiftoffCompiler {
     if (V8_UNLIKELY(v8_flags.trace_wasm_memory) && index != no_reg) {
       outer_pinned.set(index);
     }
+
+    //Use existing store function as already exists
+    //__ AtomicStore(addr, index, offset, value, type, outer_pinned, i64_offset);
     __ AtomicStoreRelease(addr, index, offset, value, type, outer_pinned, i64_offset);
-    //__ AtomicStoreRelease(addr, index, offset, value, type, outer_pinned, i64_offset);
     if (V8_UNLIKELY(v8_flags.trace_wasm_memory)) {
       // TODO(14259): Implement memory tracing for multiple memories.
       CHECK_EQ(0, imm.memory->index);
@@ -6333,11 +6335,14 @@ class LiftoffCompiler {
                 const size_t argc, const MemoryAccessImmediate& imm,
                 Value* result) {
     switch (opcode) {
-#define ATOMIC_STORE_OP(name, type)                         \
+#define ATOMIC_STORE_OP(name, type)                    \
   case wasm::kExpr##name:                                   \
-      f##name(decoder, StoreType::type, imm); \
-      break;
-
+    f##name(decoder, StoreType::type, imm);          \
+    break;
+/*     case wasm::kExpr##name:                            \
+      f##name(decoder, StoreType::type, imm);        \
+      break;  
+ */
       ATOMIC_STORE_LIST(ATOMIC_STORE_OP)
 #undef ATOMIC_STORE_OP
 
